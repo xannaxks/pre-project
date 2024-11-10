@@ -4,6 +4,10 @@
 
   ``
   $ git clone https://github.com/xannaxks/pre-project/
+  ``
+  ``
   $ cd pre-project
+  ``
+  ``
   $ python test.py
   ``
