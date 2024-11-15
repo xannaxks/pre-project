@@ -1,4 +1,4 @@
-# Simple Tic Tac Toe game pre-project, to practice lists, loops and basic python
+# Simple To Do app as pre-project
 ## How to run?
 * Open terminal and copy following commands
 

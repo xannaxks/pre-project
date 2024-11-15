@@ -1,66 +1,64 @@
-import random
+import os
+import time
 
-table = ['1', '2', '3', '4', '5', '6', '7', '8', '9'] # gaming table
+menu = [
+    '1. List all tasks',
+    '2. Add new task', 
+    '3. Update existing task', 
+    '4. Remove existing task', 
+    '5. Exit'
+] # Menu options
 
-isFinished = False # whether game finished or not
-Turn = True # indicator of turn
+tasks = [] # List to store tasks
 
-for _ in range(1000): # iterations
-    if not isFinished: # if game still not finished
-        if Turn: # if its user's turn
+while True: # Loop to process options
 
-            # printing game table
-            for i in range(0, len(table)):
-                if i % 3 == 0 and i != 0:
-                    print('') #
-                print(table[i], end = ' ')
-            print('')
+    # Listing options and accepting users option
+    print('-- TASK MANAGER --\n')
+    for i in menu:
+        print(i)
+    x = int(input('\nPlease select the option: '))
+    print('')
 
-        if Turn: # if its user's turn
-            x = int(input('Enter number of cell: ')) # asking to input cell number
-            x -= 1 # subtracting one, cuz of zero indexing
-            if x < 0 or x > 8: # checking whether cell number between allowed range
-                print('Cell number out of range') # print error
-            elif table[x] == 'X' or table[x] == 'O': # checking whether cell is not used yet
-                print('Invalid cell number') # print error
-            else:
-                # marking cell as used and turn to pc
-                table[x] = 'X'
-                Turn = False
-        else: # if its pcs move
-            PCMove = random.choice([i for i in range(0, len(table)) if table[i] != 'X' and table[i] != 'O']) # selecting random cell from not used ones
-            table[PCMove] = 'O' # marking as used
-            Turn = True # turn to user
+    # Error handling
+    if (x < 1) or (x > 5):
+        print('Invalid option')
+        continue
+    elif(x == 5):
+        print('Quiting...')
+        break
 
-        if((table[0] == table[1] and table[1] == table[2] and table[0] == 'X') # checking whether user won or not
-                or (table[3] == table[4] and table[4] == table[5] and table[3] == 'X')
-                or (table[6] == table[7] and table[7] == table[8] and table[6] == 'X')
-                or (table[0] == table[3] and table[3] == table[6] and table[0] == 'X')
-                or (table[1] == table[4] and table[4] == table[7] and table[1] == 'X')
-                or (table[2] == table[5] and table[5] == table[8] and table[2] == 'X')
-                or (table[0] == table[4] and table[4] == table[8] and table[0] == 'X')
-                or (table[2] == table[4] and table[4] == table[6] and table[2] == 'X')):
-            isFinished = True # indicating that game finished
-            print('U won') # printing message
-        elif((table[0] == table[1] and table[1] == table[2] and table[0] == 'O') # checking whether pc won or not
-             or (table[3] == table[4] and table[4] == table[5] and table[3] == 'O')
-             or (table[6] == table[7] and table[7] == table[8] and table[6] == 'O')
-             or (table[0] == table[3] and table[3] == table[6] and table[0] == 'O')
-             or (table[1] == table[4] and table[4] == table[7] and table[1] == 'O')
-             or (table[2] == table[5] and table[5] == table[8] and table[2] == 'O')
-             or (table[0] == table[4] and table[4] == table[8] and table[0] == 'O')
-             or (table[2] == table[4] and table[4] == table[6] and table[2] == 'O')):
-            isFinished = True # indicating that game finished
-            print('Pc won') # printing message
-        elif table.count('X') + table.count('O') == 9: # checking whether its draw or not
-            isFinished = True # indicating that game finished
-            print('Draw') # printing message
+    # Printing already existing tasks
+    print('Total amount of tasks:', len(tasks))
+    for i in range(len(tasks)):
+        print(i+1, '. ', tasks[i], sep='')
+    print('')
 
-        if isFinished: # if game has just finished, print game table one last time
-            print('Final Result: ')
-            for i in range(0, len(table)):
-                if i % 3 == 0 and i != 0:
-                    print('')
-                print(table[i], end = ' ')
-            print('')
+    # Processing option, the user choose
+    if(x == 2):
+        newTask = str(input('Type ur task here: '))
+        tasks.append(newTask)
+        print('\nSuccesfully added')
+    elif(x == 3):
+        updateIdx = int(input('Type task number u want to update: '))
+        updateText = str(input('Type the text to update: '))
+        if (updateIdx < 1) or (updateIdx > len(tasks)):
+            print('\nIndex of task out of range')
+        else:
+            tasks[updateIdx-1] = updateText
+            print('\nSuccesfully updated')
+    elif(x == 4):
+        deleteIdx = int(input('Type task number u want to delete: '))
+        if (deleteIdx < 1) or (deleteIdx > len(tasks)):
+            print('\nIndex of task out of range')
+        else:
+            tasks.pop(deleteIdx-1)
+            print('\nSuccesfully deleted')
+
+    # Clearing the screen and repeating all this again
+    os.system('pause')
+    os.system('cls')
+
+
+
 
