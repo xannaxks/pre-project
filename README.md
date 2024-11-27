@@ -19,5 +19,5 @@ CRUD operations in CLI mode, to manage your tasks. Sorts tasks by starting time.
   ``
   
   ``
-  $ python test.py
+  $ python main.py
   ``
